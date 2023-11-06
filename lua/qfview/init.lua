@@ -97,22 +97,26 @@ function M.qftextfunc(info)
     local bufname = vim.api.nvim_buf_get_name(items[idx].bufnr)
     table.insert(paths, vim.fs.normalize(bufname))
     local linenr = nil
-    if items[idx].lnum == items[idx].end_lnum then
-      linenr = string.format(
-        '%d:%d-%d',
-        items[idx].lnum,
-        items[idx].col,
-        items[idx].end_col
-      )
-    else
-      linenr = string.format(
-        '%d-%d:%d%d',
-        items[idx].lnum,
-        items[idx].end_lnum,
-        items[idx].col,
-        items[idx].end_col
-      )
-    end
+    -- if items[idx].lnum == items[idx].end_lnum then
+      -- linenr = string.format(
+        -- '%d:%d-%d',
+        -- items[idx].lnum,
+        -- items[idx].col,
+        -- items[idx].end_col
+      -- )
+    -- else
+      -- linenr = string.format(
+        -- '%d-%d:%d%d',
+        -- items[idx].lnum,
+        -- items[idx].end_lnum,
+        -- items[idx].col,
+        -- items[idx].end_col
+      -- )
+    -- end
+    linenr = string.format(
+      '%d',
+      items[idx].lnum
+    )
     table.insert(linenrs, linenr)
     table.insert(texts, items[idx].text)
   end
@@ -150,6 +154,7 @@ function M.qftextfunc(info)
   local l = {}
   for idx = info.start_idx, info.end_idx do
     local fmt = '%-' .. path_maxw .. 's|%' .. linenr_maxw .. 's|%s'
+    -- local fmt = '%-' .. path_maxw .. 's%s'
     local line = vim.fn.printf(
       fmt,
       stripped_paths[idx],
